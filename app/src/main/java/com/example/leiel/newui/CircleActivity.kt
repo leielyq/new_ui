@@ -1,5 +1,6 @@
 package com.example.leiel.newui
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
@@ -10,6 +11,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_circle.*
+import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
+
 
 class CircleActivity : AppCompatActivity() {
 
@@ -43,19 +47,35 @@ class CircleActivity : AppCompatActivity() {
 
             val mA = ValueAnimator.ofFloat(0f,360f)
             mA.duration=1000
-            mA.addUpdateListener(ValueAnimator.AnimatorUpdateListener { valueAnimator ->
-                mC = valueAnimator.animatedValue as Float
+            mA.repeatMode=ValueAnimator.REVERSE
+            mA.repeatCount=ValueAnimator.INFINITE
+            mA.addUpdateListener { valueAnimator ->
+                mC= valueAnimator.animatedValue as Float
                 invalidate()
+            }
+
+            mA.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    mPaint.color = Color.RED
+                }
+
+                override fun onAnimationRepeat(animation: Animator?) {
+                    super.onAnimationRepeat(animation)
+                    mPaint.color = Color.RED
+                }
             })
+
+
             mA.start()
         }
 
         override fun onDraw(canvas: Canvas?) {
             super.onDraw(canvas)
-            var rect = RectF((mW/2-mR/2).toFloat(), (mH/2-mR/2).toFloat(), (mW/2+mR/2).toFloat(), (mH/2+mR/2).toFloat())
+            val rect = RectF((mW/2-mR/2).toFloat(), (mH/2-mR/2).toFloat(), (mW/2+mR/2).toFloat(), (mH/2+mR/2).toFloat())
 
             canvas?.drawArc(rect, 0f, mC,true,mPaint)
-            mPaint.color=Color.RED
+
 //            canvas?.drawCircle((mW / 2).toFloat(), (mH / 2).toFloat(), mR.toFloat(), mPaint)
         }
     }
