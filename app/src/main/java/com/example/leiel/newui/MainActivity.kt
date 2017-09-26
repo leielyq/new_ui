@@ -8,7 +8,6 @@ import android.support.transition.Scene
 import android.support.transition.TransitionManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main_alt.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         var change = false
         findViewById<View>(R.id.activity_main_btn).setOnClickListener {
 //            TransitionManager.beginDelayedTransition(activity_main_cl)
-            TransitionManager.beginDelayedTransition(con02, ChangeBounds())
+            TransitionManager.go(con02, ChangeBounds())
             val constraint = if (change) con1 else con2
 //            constraint.applyTo(activity_main_cl)
             change = !change
