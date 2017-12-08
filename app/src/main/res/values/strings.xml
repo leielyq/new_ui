@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewUI</string>
+    <string name="title_activity_zan">ZanActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
